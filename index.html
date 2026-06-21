@@ -1,269 +1,68 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<script type="module"
-src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3DCG Portfolio</title>
-
-
-
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#0a0a0a;color:#f5f5f5;line-height:1.7}
-:root{--gold:#c9a66b}
-nav{position:fixed;top:0;width:100%;background:#111;padding:15px 40px;display:flex;justify-content:space-between;border-bottom:1px solid #333}
-nav a{color:#ddd;text-decoration:none;margin-left:20px}
-section{max-width:1200px;margin:auto;padding:100px 20px}
-.hero{display:grid;grid-template-columns:1fr 350px;gap:50px;align-items:center;min-height:100vh}
-.hero img{width:100%;border:2px solid var(--gold)}
-h1{font-size:4rem}
-h1 span,.section-title{color:var(--gold)}
-.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.card{background:#111;padding:20px;border:1px solid #333}
-.skills{display:flex;gap:10px;flex-wrap:wrap}
-.skill{border:1px solid var(--gold);padding:6px 12px}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.work{background:#111;border:1px solid #333;cursor:pointer}
-.work img{width:100%;height:250px;object-fit:cover}
-.work-info{padding:15px}
-footer{text-align:center;padding:40px;border-top:1px solid #333}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;z-index:999}
-.modal.active{display:flex}
-.modal-content{width:95vw;height:90vh;background:#111;display:grid;grid-template-columns:3fr 1fr}
-.modal-image{display:flex;align-items:center;justify-content:center;background:#000}
-.modal-image img{width:100%;height:100%;object-fit:contain}
-.modal-side{padding:20px;overflow:auto}
-.close{position:absolute;top:20px;right:30px;font-size:30px;cursor:pointer;color:white}
-#wireImg{width:100%;margin-top:10px;border:1px solid #333}
-@media(max-width:900px){
-.hero,.profile-grid,.modal-content{grid-template-columns:1fr}
-.gallery{grid-template-columns:1fr}
-}
-/* スキルセクション全体の並び（横並びにする場合） */
-.skills {
-  display: flex;
-  gap: 20px;          /* アイコン同士の間隔 */
-  align-items: center;
-}
-
-/* アイコンを囲む枠の設定 */
-.skill {
-  width: 50px;        /* アイコンを表示したい横幅 */
-  height: 50px;       /* アイコンを表示したい縦幅 */
-}
-
-/* 中の画像（ロゴ）を枠線にぴったり収める設定 */
-.skill img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* 画像の比率を崩さずに綺麗に収める */
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #F5F5F5; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; color: #1A1A1A; padding: 48px 20px; }
+    .page { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    .card { background: #fff; border: 1.5px solid #1A1A1A; border-radius: 4px; padding: 28px 32px; }
+    .card h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+    .card .sub { color: #666; font-size: 0.9rem; }
+    .card h2 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #2E5CE6; margin-bottom: 16px; }
+    .card p { font-size: 0.93rem; line-height: 1.8; color: #444; }
+    .exp-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .exp-list li { display: flex; flex-direction: column; gap: 6px; }
+    .exp-body strong { font-size: 1.05rem; font-weight: 700; color: #1A1A1A; }
+    .exp-body span { font-size: 0.87rem; color: #555; line-height: 1.7; }
+    .exp-tag { display: inline-block; margin-top: 4px; margin-right: 4px; padding: 2px 10px; border: 1px solid #C8C5BC; border-radius: 2px; font-size: 0.75rem; color: #666; }
+    .divider { border: none; border-top: 1px solid #EEE; }
+    .portfolio-link { display: inline-block; margin-top: 10px; padding: 8px 20px; background: #1A1A1A; color: #fff; border-radius: 4px; font-size: 0.85rem; text-decoration: none; transition: background 0.15s; }
+    .portfolio-link:hover { background: #2E5CE6; }
+    a { color: #2E5CE6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-
-<nav>
-<div>3DCG PORTFOLIO</div>
-<div>
-<a href="#about">About</a>
-<a href="#works">Works</a>
-<a href="#contact">Contact</a>
-</div>
-</nav>
-
-<section class="hero">
-<div>
-<h1>Myoken<br><span>Haruki</span></h1>
-<p>デジタルハリウッド大学所属の妙見 陽喜と申します。主にMayaをメインで制作しており、モデリング、アニメーション、リギング、UVなど一通りのことは経験しています。</p>
-</div>
-<img src="IMG_4648.JPG" alt="プロフィール写真">
-</section>
-
-<section id="about">
-<h2 class="section-title">About Me</h2>
-<div class="profile-grid">
-<div class="card">
-<h3>Profile</h3>
-<p>
-デジタルハリウッド大学<br><br>
-３DCGをやるために、デジタルハリウッドに入学しました。現在は、CG以外にもプログラミングにも興味がわき勉強しています。
-</p>
-</div>
-<div class="card">
-<h3>Skills</h3>
-<div class="skills">
-  <div class="skill">
-    <img src="Maya.png" alt="Maya" title="Maya">
+  <div class="page">
+    <div class="card">
+      <h1>妙見　陽喜</h1>
+      <p class="sub">デジタルハリウッド大学 デジタルコミュニケーション学部 デジタルコンテンツ学科　3年生</p>
+    </div>
+    <div class="card">
+      <h2>About</h2>
+      <p>はじめまして、妙見陽喜（みょうけん はるき）と申します。デジタルハリウッド大学で、Autodesk MayaやZBrushなどのソフトを使用し、3DCGの制作をメインに取り組んでいます。また、デジタルでのモノづくりだけでなく、演劇サークルでの舞台活動など、自ら表現し作り上げる活動全般に力を入れてきました。</p>
+    </div>
+    <div class="card">
+      <h2>Experience</h2>
+      <ul class="exp-list">
+        <li>
+          <div class="exp-body">
+            <strong>演劇サークルでの活動</strong><br/>
+            <span>演劇サークル「劇団らふる(現ENK3I)」で演者と制作部チーフをやっていました。2025年の活動で学外の劇場を借りて演劇をしたとき収益を完全に黒字化させることに成功しております。</span><br/>
+            <span class="exp-tag">演者</span>
+            <span class="exp-tag">制作チーフ</span>
+          </div>
+        </li>
+        <hr class="divider" />
+        <li>
+          <div class="exp-body">
+            <strong>大学での3DCG制作</strong><br/>
+            <span>大学では主に、3DCGをメインに勉強しているので在籍中に多くの作品を作成してきました。</span><br/>
+            <span class="exp-tag">Maya</span>
+            <span class="exp-tag">ZBrush</span><br/>
+            <a class="portfolio-link" href="./portfolio/" target="_blank">🎨 ポートフォリオを見る</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Contact</h2>
+      <p>📧 <a href="mailto:haruki8967@gmail.com">haruki8967@gmail.com</a></p>
+    </div>
   </div>
-  <div class="skill">
-    <img src="ZBrush.png" alt="ZBrush" title="ZBrush">
-  </div>
-  <div class="skill">
-    <img src="Premiere_Pro.png" alt="Premiere Pro" title="Photoshop">
-  </div>
-  <div class="skill">
-    <img src="After_Efect.png" alt="After Effects" title="After Effects">
-  </div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<section id="works">
-<h2 class="section-title">Works</h2>
-
-<div class="gallery">
-
-<div class="work"
-data-title="サッカーボール"
-data-img="soccerboal_ver2.jpg"
-data-model="soccer_ball_ver2.glb"
-data-desc="小さいころからサッカーをしていたため、よく使っていたサッカーボールを作成しました。"
-data-software="Maya"
-data-period="6日"
-data-role="モデリング・UV・テクスチャ"
-data-wire="wire_ball_ver3.png">
-<img src="soccerboal_ver2.jpg">
-<div class="work-info"><h3>サッカーボール</h3></div>
-</div>
-
-<div class="work"
-data-title="スパイク"
-data-img="spike_portfolo.jpg"
-data-model="spike4.glb"
-data-desc="いつも使っていたスパイクをイメージして作成しました。"
-data-software="Maya"
-data-period="10日"
-data-role="モデリング・ＵＶ・テクスチャ"
-data-wire="wire_spiku.png">
-<img src="spike_portfolo.jpg">
-<div class="work-info"><h3>スパイク</h3></div>
-</div>
-
-<div class="work"
-data-title="サッカーゴール"
-data-img="Soccer_goal.jpg"
-data-model="none"
-data-desc="サッカーボールに合わせてゴールとグラウンドを作成しました。この時分かりやすいように、サッカーボールも配置してあります。"
-data-software="Maya"
-data-period="4日"
-data-role="モデリング・UV・レンダリング"
-data-wire="wire_Goal.png">
-
-<img src="Soccer_goal.jpg">
-
-<div class="work-info">
-<h3>サッカーゴール</h3>
-</div>
-
-</div>
-<div class="work"
-data-title="ピカチュウ"
-data-img="pikatyu.jpg"
-data-model="pikatyu.glb"
-data-desc="キャラクターを制作するときに一番自分がイメージしやすかったポケモンのピカチュウを作成しました。このときは、テクスチャを無しでの提出だったためスカルプトのみで制作しております。"
-data-software="ZBrush"
-data-period="14日"
-data-role="スカルプト">
-<img src="pikatyu.jpg">
-<div class="work-info"><h3>ピカチュウ</h3></div>
-</div>
-
-</div>
-</section>
-
-<footer id="contact">
-<h2>Contact</h2>
-<p>haruki8967@gmail.com</p>
-</footer>
-
-<div class="modal" id="modal">
-<div class="close" id="close">✕</div>
-
-<div class="modal-content">
-
-<div class="modal-image">
-
-<img id="modalImg">
-
-<model-viewer
-  id="modelViewer"
-  camera-controls
-  auto-rotate
-  environment-image="neutral"   
-  exposure="0.3"                
-  shadow-intensity="1"          
-  shadow-softness="0.5"         
-  style="display:none;width:100%;height:100%;background:#111;">
-</model-viewer>
-
-</div>
-
-<div class="modal-side">
-
-<h2 id="modalTitle"></h2>
-<p id="modalDesc"></p>
-
-<hr><br>
-
-<p><strong>使用ソフト</strong><br><span id="modalSoftware"></span></p><br>
-
-<p><strong>制作期間</strong><br><span id="modalPeriod"></span></p><br>
-
-<p><strong>担当工程</strong><br><span id="modalRole"></span></p>
-
-<h3 style="margin-top:20px;">Wireframe</h3>
-<img id="wireImg">
-
-</div>
-</div>
-</div>
-
-<script>
-const modal=document.getElementById('modal');
-
-const modalImg = document.getElementById('modalImg');
-const modelViewer = document.getElementById('modelViewer');
-
-document.querySelectorAll('.work').forEach(item=>{
-item.addEventListener('click',()=>{
-
-const modelPath = item.dataset.model;
-
-if(modelPath && modelPath !== "none"){
-
-    modelViewer.style.display = "block";
-    modalImg.style.display = "none";
-
-    modelViewer.src = modelPath;
-
-}else{
-
-    modelViewer.style.display = "none";
-    modalImg.style.display = "block";
-
-    modalImg.src = item.dataset.img;
-}
-document.getElementById('modalTitle').textContent=item.dataset.title;
-document.getElementById('modalDesc').textContent=item.dataset.desc;
-document.getElementById('modalSoftware').textContent=item.dataset.software;
-document.getElementById('modalPeriod').textContent=item.dataset.period;
-document.getElementById('modalRole').textContent=item.dataset.role;
-document.getElementById('wireImg').src=item.dataset.wire;
-
-modal.classList.add('active');
-});
-});
-
-document.getElementById('close').onclick=()=>{
-modal.classList.remove('active');
-};
-</script>
-
 </body>
 </html>
